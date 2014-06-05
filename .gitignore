@@ -1,0 +1,8 @@
+
+# ignore packages by bower
+public/libs/
+
+# ignore modules by node
+node_modules/
+
+*.*~

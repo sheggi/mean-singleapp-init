@@ -1,0 +1,11 @@
+{
+	"name": "mean-portemonaie",
+	"version": "1.0.0",
+    "homepage": "https://sheggi.ch/",
+    "private": true,
+	"dependencies": {
+		"angular": "latest",
+		"angular-bootstrap": "latest",
+		"angular-route": "latest"	
+	}
+}
