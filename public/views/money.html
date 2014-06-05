@@ -1,0 +1,5 @@
+<h1>Money &Uuml;bersicht</h1>
+<ul class="nav nav-tabs nav-justified">
+	<li ng-repeat="pane in panes" class="{{pane.active?'active':''}}"><a ng-click="loadPane(pane.src)">{{pane.title}}</a></li>
+</ul>
+<div ng-include="paneURL"></div>
