@@ -3,48 +3,7 @@
 /**
  * Kontroller für Money Liste
  */
-var AppControllers = angular.module('AppControllers', []);
-
-AppControllers.controller('NavbarCtrl', ['$scope', '$location', function ($scope, $location) {
-        
-    $scope.subApps = [
-        {
-            title: "Home",
-            path: "/"
-        },
-        {
-            title: "Portemonaie",
-            path: "/money"
-        },
-        {
-            title: "Test",
-            path: "/test"
-        }
-    ];
-        
-    $scope.isCollapsed = true;
-    $scope.$on('$routeChangeSuccess', function () {
-        $scope.isCollapsed = true;
-    });
-        
-    $scope.getClass = function (path) {
-        if (path === '/') {
-            if ($location.path() === '/') {
-                return "active";
-            } else {
-                return "";
-            }
-        }
-
-        if ($location.path().substr(0, path.length) === path) {
-            return "active";
-        } else {
-            return "";
-        }
-    };
-}]);
-
-AppControllers.controller('MoneyCtrl', ['$scope', '$http', '$routeParams', '$filter', function ($scope, $http, $routeParams, $filter) {
+angular.module('MoneyCtrl', []).controller('MoneyController', ['$scope', '$http', '$routeParams', '$filter', 'Money', function ($scope, $http, $routeParams, $filter, Money) {
     
 	$scope.panes = [
 		{
@@ -63,6 +22,12 @@ AppControllers.controller('MoneyCtrl', ['$scope', '$http', '$routeParams', '$fil
 		$scope.moneys.date = Date.parse($scope.moneys.date);
         $scope.hMoneys = {name: "Full List", entrys: data, getSum: entryGroupSumm};
 	});
+    Money.get(function(data) {
+        $scope.mongo = data;
+    });
+    /*$http.get('api/money').success(function (data) {
+		$scope.mongo = data;
+	});*/
 	$scope.orderProp = '-date';
     $scope.query = '';
 
@@ -114,5 +79,16 @@ AppControllers.controller('MoneyCtrl', ['$scope', '$http', '$routeParams', '$fil
 		return nestedArray;
 	};
     
+    $scope.sendMoneys = function() {
+        var i;
+        for( i = 0; i < $scope.moneys.length ; i++){
+            $scope.moneys[i].description = "Änderung";
+            Money.create($scope.moneys[i]);
+        }
+        
+        $http.get('api/money').success(function (data) {
+            $scope.mongo = data;
+        });
+    };
     
 }]);

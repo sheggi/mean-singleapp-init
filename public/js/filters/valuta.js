@@ -1,7 +1,7 @@
 'use strict';
-angular.module('moneyFilters', []).filter('valuta', function () {
+angular.module('ValutaFilter', []).filter('valuta', function () {
     return function (input) {
-        if(input == "") return;
+        if(isNaN(input) || input === null || input === "") return;
         return input.toFixed(2) + ' CHFr.';
     };
 });

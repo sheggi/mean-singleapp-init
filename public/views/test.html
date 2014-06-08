@@ -1,0 +1,32 @@
+<h3>TEST</h3>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <!--Sidebar content-->
+            Search function: <input ng-model="query">
+            Sort by: <select ng-model="orderProp"> 
+                <option value="value">Wert</option>
+                <option value="date">Neustes</option>
+                <option value="-date">Aeltestes</option>
+            </select>
+            <button ng-click="sendMoneys()">Send Moneys</button>
+        </div>
+        <div class="span6">
+            
+            <h4>Schluss Total</h4>
+            <u>{{hMoneys.getSum()}}</u>
+            <br>
+            {{ mongo }}
+            <hr>
+            {{ moneys }}
+            <table class="table" ng-repeat="entry in mongo | filter:query">
+                <tr>
+                    <td class="text-center">{{entry._id}}</td>
+                    <td class="text-right">{{entry.date | date:'dd.MM.yyyy'}} {{entry.date | date:'HH:mm:ss'}}</td>
+                    <td>{{entry.description}}</td>
+                    <td class="text-right">{{entry.value | valuta}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
