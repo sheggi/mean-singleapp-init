@@ -16,6 +16,11 @@ angular.module('MoneyCtrl', []).controller('MoneyController', ['$scope', '$http'
             src: "views/money.change.html"
         }
 	];
+    
+    $scope.alerts = [];
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
         
     $http.get('data/data.json').success(function (data) {
 		$scope.moneys = data;
@@ -83,7 +88,10 @@ angular.module('MoneyCtrl', []).controller('MoneyController', ['$scope', '$http'
         var i;
         for( i = 0; i < $scope.moneys.length ; i++){
             $scope.moneys[i].description = "Änderung";
-            Money.create($scope.moneys[i]);
+            Money.create($scope.moneys[i], function(data) {
+                console.log(data);
+                $scope.alerts.push({msg: data}); //FIXXX corekte Meldung und Frarbe danger, success
+            });
         }
         
         $http.get('api/money').success(function (data) {

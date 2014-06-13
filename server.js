@@ -9,10 +9,6 @@ var mongoose= require('mongoose');
 var db = require('./config/db');
 
 
-    
-    
-    
-
 var port = process.env.PORT || 8080; // set our port
 mongoose.connect(db.url); // connect to our mongoDB database (uncomment after you enter in your own credentials in config/db.js)
 
@@ -24,7 +20,7 @@ app.configure(function() {
 });
 
 // routes ==================================================
-require('./app/routes')(app); // configure our routes
+require('./app/routes')(app, db); // configure our routes
 
 // start app ===============================================
 app.listen(port);										// startup our app at http://localhost:8080
